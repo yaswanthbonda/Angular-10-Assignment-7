@@ -14,19 +14,20 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
     this.mySignupForm = new FormGroup({
-      'projectName' : new FormControl(null, [Validators.required, this.forbiddenProjectName.bind(this)]),
+      'projectName' : new FormControl(null, [Validators.required, this.forbiddenProjectName], this.forbiddenProjectNameAsync),
       'email' : new FormControl(null, [Validators.required, Validators.email]),
-      'projectStatus' : new FormControl(null)
+      'projectStatus' : new FormControl('critical')
     });
   }
 
   onSubmit(){
+    console.log("Testing submit button!");
     console.log(this.mySignupForm);
     this.mySignupForm.reset();
   }
 
   forbiddenProjectName(control: FormControl): {[s: string]: boolean}{
-    if(control.value === 'Test'){
+    if(control.value === 'Test2'){
       return {'projNameIsForbidden': true}
     }
     return null;
@@ -38,7 +39,7 @@ export class AppComponent implements OnInit{
         {
           if(control.value === 'Test'){
             resolve({'projNameIsForbidden': true});
-          }else resolve(null);
+          }else {resolve(null);}
         }, 2000 
       );
     });
